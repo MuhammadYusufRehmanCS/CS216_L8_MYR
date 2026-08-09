@@ -35,6 +35,14 @@ const string &Balrog::getType() const
     return BALROG_TYPE_NAME;
 }
 
+// Description: Returns the Balrog type code used when an Army copies a Creature list.
+// Precondition: The Balrog object exists.
+// Postcondition: The Balrog enumerator is returned and the object remains unchanged.
+CreatureType Balrog::getTypeCode() const
+{
+    return BALROG;
+}
+
 // Description: Calculates two independent basic Creature attacks for the Balrog.
 // Precondition: The Balrog contains valid strength and the random number generator has been seeded.
 // Postcondition: The sum of two Creature attacks is returned and the Balrog remains unchanged.

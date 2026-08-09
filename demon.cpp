@@ -37,6 +37,14 @@ const string &Demon::getType() const
     return DEMON_TYPE_NAME;
 }
 
+// Description: Returns the Demon type code used when an Army copies a Creature list.
+// Precondition: The Demon object exists.
+// Postcondition: The Demon enumerator is returned and the object remains unchanged.
+CreatureType Demon::getTypeCode() const
+{
+    return DEMON;
+}
+
 // Description: Calculates Creature damage and adds bonus damage with the configured Demon chance.
 // Precondition: The Demon contains valid strength and the random number generator has been seeded.
 // Postcondition: Complete Demon damage is returned and the object remains unchanged.

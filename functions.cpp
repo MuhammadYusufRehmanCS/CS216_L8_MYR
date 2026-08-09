@@ -13,29 +13,50 @@ using namespace std;
 extern const string LAB_NAME = "CS 216 Lab #8 Abstract";
 extern const string STUDENT_NAME = "Muhammad Yusuf Rehman";
 extern const string INPUT_FILE_NAME = "in_names.txt";
+
 extern const string DEFAULT_CREATURE_NAME = "DefaultCreature";
 extern const string DEFAULT_DEMON_NAME = "DefaultDemon";
 extern const string DEFAULT_BALROG_NAME = "DefaultBalrog";
 extern const string DEFAULT_ELF_NAME = "DefaultElf";
 extern const string DEFAULT_CYBERELF_NAME = "DefaultCyberelf";
 extern const string DEFAULT_ARMY_NAME = "DefaultArmy";
+extern const string INVALID_NAME = "InvalidName";
+
 extern const string DEMON_TYPE_NAME = "Demon";
 extern const string BALROG_TYPE_NAME = "Balrog";
 extern const string ELF_TYPE_NAME = "Elf";
 extern const string CYBERELF_TYPE_NAME = "Cyberelf";
-extern const string INVALID_MENU_MESSAGE = "Invalid menu choice. Select from the menu above.";
-extern const string INVALID_ARMY_MESSAGE = "Invalid army data. The army remains unchanged.";
-extern const string INVALID_CREATURE_MESSAGE = "Invalid creature data. The creature remains unchanged.";
-extern const string INPUT_FILE_ERROR_MESSAGE = "The creature-name input file could not be opened.";
-extern const string CREATURE_FILE_ERROR_MESSAGE = "The army could not be generated from the creature-name file.";
-extern const string MEMORY_ERROR_MESSAGE = "Dynamic memory allocation failed. The program ended safely.";
+
 extern const string MENU_TEXT = "\n\nMenu:\n"
                                 "1. Battle\n"
                                 "2. Quit\n"
                                 "Enter your choice: ";
+extern const string FIRST_ARMY_QUESTION = "Enter the first army name: ";
+extern const string SECOND_ARMY_QUESTION = "Enter the second army name: ";
+extern const string ARMY_SIZE_QUESTION = "Enter the number of creatures in each army: ";
+
+extern const string ARMY_ONE_BEFORE_HEADING = "Army #1 Stats before the Battle";
+extern const string ARMY_TWO_BEFORE_HEADING = "Army #2 Stats before the Battle";
+extern const string ARMY_ONE_AFTER_HEADING = "Army #1 Stats after the Battle";
+extern const string ARMY_TWO_AFTER_HEADING = "Army #2 Stats after the Battle";
+
+extern const string INVALID_MENU_MESSAGE = "Invalid menu choice. Select from the menu above.\n";
+extern const string INVALID_NAME_MESSAGE = "Enter a nonblank name.\n";
+extern const string INVALID_SIZE_MESSAGE = "Enter a positive whole number.\n";
+extern const string INVALID_ARMY_MESSAGE = "Invalid army data. The army remains unchanged.\n";
+extern const string INVALID_CREATURE_MESSAGE = "Invalid creature data. The creature remains unchanged.\n";
+extern const string INPUT_FILE_ERROR_MESSAGE = "The creature-name input file could not be opened.\n";
+extern const string CREATURE_FILE_ERROR_MESSAGE = "The army could not be generated from the creature-name file.\n";
+extern const string MEMORY_ERROR_MESSAGE = "Dynamic memory allocation failed. The army was not generated.\n";
+extern const string PROGRAM_ERROR_MESSAGE = "Dynamic memory allocation failed. The program ended safely.\n";
+extern const string BATTLE_ERROR_MESSAGE = "Both armies must be generated and the same size to battle.\n";
+extern const string QUIT_MESSAGE = "Program ended.\n";
+extern const string TIE_MESSAGE = "The armies tied.\n";
 
 extern const int INVALID_STAT = -1;
 extern const int DEFAULT_STAT = 45;
+extern const int MIN_HEALTH = 0;
+extern const int MIN_VALID_STRENGTH = 1;
 extern const int MIN_RESET_STAT = 30;
 extern const int MAX_RESET_STAT = 150;
 extern const int MIN_ARMY_STAT = 45;
@@ -49,6 +70,7 @@ extern const int ELF_ATTACK_CHANCE = 20;
 extern const int CYBERELF_ATTACK_CHANCE = 30;
 extern const int DEMON_BONUS_DAMAGE = 40;
 extern const int CYBERELF_BONUS_DAMAGE = 50;
+extern const int ELF_DAMAGE_MULTIPLIER = 2;
 extern const int PERCENT_RANGE = 100;
 
 extern const int CREATURE_WIDTH = 18;
@@ -78,12 +100,12 @@ void clearCin(const string &errorMessage)
 {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cout << errorMessage << '\n';
+    cout << errorMessage;
 }
 
 // Description: Gets one valid Army name from the user.
 // Precondition: The question contains the prompt to display and standard input is available.
-// Postcondition: A nonblank Army name is returned.
+// Postcondition: A nonblank Army name is returned even when the input stream ends.
 string getArmyName(const string &question)
 {
     string armyName = DEFAULT_ARMY_NAME;
@@ -93,50 +115,52 @@ string getArmyName(const string &question)
     {
         cout << question;
         getline(cin, armyName);
-        isValid = isValidArmyName(armyName);
+        isValid = isValidName(armyName);
 
         if (!isValid)
         {
-            cout << "Enter a nonblank army name.\n";
+            armyName = DEFAULT_ARMY_NAME;
+            cout << INVALID_NAME_MESSAGE;
         }
-    } while (!isValid);
+    } while (!isValid && !cin.eof());
 
     return armyName;
 }
 
 // Description: Gets one positive shared Army size from the user.
 // Precondition: Standard input is available.
-// Postcondition: A whole number no smaller than one is returned.
+// Postcondition: A whole number no smaller than one is returned even when the input stream ends.
 int getArmySize()
 {
-    int armySize = 0;
+    int armySize = MIN_ARMY_SIZE;
     bool isValid = false;
 
     do
     {
-        cout << "Enter the number of creatures in each army: ";
+        cout << ARMY_SIZE_QUESTION;
         cin >> armySize;
         isValid = !cin.fail() && armySize >= MIN_ARMY_SIZE;
 
         if (!isValid)
         {
-            clearCin("Enter a positive whole number.");
+            armySize = MIN_ARMY_SIZE;
+            clearCin(INVALID_SIZE_MESSAGE);
         }
-    } while (!isValid);
+    } while (!isValid && !cin.eof());
 
     return armySize;
 }
 
-// Description: Determines whether an Army name contains at least one nonspace character.
-// Precondition: A proposed Army name is supplied.
-// Postcondition: True is returned only when the Army name is not blank.
-bool isValidArmyName(const string &armyName)
+// Description: Determines whether a proposed Army or Creature name contains at least one nonspace character.
+// Precondition: A proposed name is supplied.
+// Postcondition: True is returned only when the name is not blank.
+bool isValidName(const string &proposedName)
 {
     bool isValid = false;
 
-    for (int characterIndex = 0; characterIndex < static_cast<int>(armyName.length()) && !isValid; ++characterIndex)
+    for (int characterIndex = 0; characterIndex < static_cast<int>(proposedName.length()) && !isValid; ++characterIndex)
     {
-        unsigned char character = static_cast<unsigned char>(armyName[characterIndex]);
+        unsigned char character = static_cast<unsigned char>(proposedName[characterIndex]);
         isValid = isspace(character) == 0;
     }
 

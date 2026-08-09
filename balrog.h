@@ -14,6 +14,7 @@ public:
 
     std::string getName() const override;
     const std::string &getType() const override;
+    CreatureType getTypeCode() const override;
     int getDamage() const override;
 };
 

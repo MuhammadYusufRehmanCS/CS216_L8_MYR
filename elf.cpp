@@ -37,16 +37,26 @@ const string &Elf::getType() const
     return ELF_TYPE_NAME;
 }
 
+// Description: Returns the Elf type code used when an Army copies a Creature list.
+// Precondition: The Elf object exists.
+// Postcondition: The Elf enumerator is returned and the object remains unchanged.
+CreatureType Elf::getTypeCode() const
+{
+    return ELF;
+}
+
 // Description: Calculates Creature damage and doubles it with the configured Elf chance.
 // Precondition: The Elf contains valid strength and the random number generator has been seeded.
 // Postcondition: Complete Elf damage is returned and the object remains unchanged.
+// Note: The assignment states Elves double their damage with a 20 percent chance, so the
+// same percent test used by Demon and Cyberelf is used here for one consistent rule.
 int Elf::getDamage() const
 {
     int damage = Creature::getDamage();
 
     if ((rand() % PERCENT_RANGE) < ELF_ATTACK_CHANCE)
     {
-        damage = damage * 2;
+        damage = damage * ELF_DAMAGE_MULTIPLIER;
     }
 
     return damage;

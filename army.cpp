@@ -10,7 +10,6 @@
 
 #include <iomanip>
 #include <iostream>
-#include <new>
 
 using namespace std;
 
@@ -25,7 +24,7 @@ Army::Army()
 
 // Description: Initializes an Army as a deep copy of another Army.
 // Precondition: rhsArmy contains a valid Army object.
-// Postcondition: A complete independent copy is created or construction fails without leaking owned memory.
+// Postcondition: A complete independent copy is created or the valid default Army remains.
 Army::Army(const Army &rhsArmy)
 {
     Creature **ppNewCreatures = nullptr;
@@ -46,19 +45,29 @@ Army::Army(const string &armyName, int armySize)
     setArmy(armyName, armySize, ppNewCreatures);
 }
 
-// Description: Releases every dynamically allocated Creature and the pointer list owned by the Army.
+// Description: Initializes an Army and dynamically generates its complete list of various Creatures.
+// Precondition: nameFile is open and holds enough valid unique names for armySize Creatures.
+// Postcondition: A complete Creature list is generated or the Army stays valid with no Creature list.
+Army::Army(const string &armyName, int armySize, ifstream &nameFile)
+{
+    Creature **ppNewCreatures = nullptr;
+    setArmy(armyName, armySize, ppNewCreatures);
+    generateCreatures(nameFile);
+}
+
+// Description: Releases every dynamically allocated Creature and resets all Army members to invalid values.
 // Precondition: The Army may own a dynamically allocated pointer list and Creature objects.
-// Postcondition: All owned memory is released and Army members are reset to safe values.
+// Postcondition: All owned memory is released and no Army data is left behind.
 Army::~Army()
 {
     deallocateCreatures(ppCreatures, size);
-    name.clear();
-    size = 0;
+    name = INVALID_NAME;
+    size = INVALID_STAT;
 }
 
 // Description: Replaces this Army with a deep copy of another Army.
 // Precondition: rhsArmy contains a valid Army object.
-// Postcondition: The complete copy replaces the old Army or the old Army remains unchanged if copying fails.
+// Postcondition: The complete copy replaces the old Army or the old Army remains unchanged.
 Army &Army::operator=(const Army &rhsArmy)
 {
     if (this != &rhsArmy)
@@ -75,20 +84,22 @@ Army &Army::operator=(const Army &rhsArmy)
     return *this;
 }
 
-// Description: Dynamically generates a complete replacement list containing various derived Creature objects.
-// Precondition: The Army has a positive arbitrary size and nameFile is open with enough valid unique names.
-// Postcondition: A complete new Creature list replaces the old list or the old Army remains unchanged.
-bool Army::generateCreatures(ifstream &nameFile)
+// Description: Reports whether this Army currently owns a generated list of Creatures.
+// Precondition: The Army object exists.
+// Postcondition: True is returned only when a Creature list is allocated and the Army remains unchanged.
+bool Army::isGenerated() const
 {
-    Creature **ppNewCreatures = nullptr;
-    bool isGenerated = createCreatureArray(ppNewCreatures, size, &nameFile, nullptr);
+    bool isReady = ppCreatures != nullptr;
 
-    if (isGenerated)
-    {
-        setArmy(name, size, ppNewCreatures);
-    }
+    return isReady;
+}
 
-    return isGenerated;
+// Description: Returns the Army name without copying the string.
+// Precondition: The Army object contains a valid record.
+// Postcondition: A const reference to the Army name is returned and the Army remains unchanged.
+const string &Army::getName() const
+{
+    return name;
 }
 
 // Description: Calculates the sum of the current health of all Creatures in the Army.
@@ -109,14 +120,34 @@ int Army::getTotalHealth() const
     return totalHealth;
 }
 
+// Description: Battles this Army against an opposing Army one matched position at a time.
+// Precondition: Both Armies have generated Creature lists of the same size.
+// Postcondition: Every matched pair battles until one Creature reaches zero health.
+void Army::battle(Army &opponentArmy)
+{
+    bool isReady = ppCreatures != nullptr && opponentArmy.ppCreatures != nullptr && size == opponentArmy.size;
+
+    if (isReady)
+    {
+        for (int creatureIndex = 0; creatureIndex < size; ++creatureIndex)
+        {
+            battleCreatures(*ppCreatures[creatureIndex], *opponentArmy.ppCreatures[creatureIndex], opponentArmy.name, creatureIndex + 1);
+        }
+    }
+    else
+    {
+        cout << BATTLE_ERROR_MESSAGE;
+    }
+}
+
 // Description: Prints one Army heading and every generated Creature in a formatted table.
 // Precondition: The Army contains a valid pointer list or has not generated its Creatures yet.
 // Postcondition: Army statistics are displayed and the Army remains unchanged.
 void Army::print(const string &heading) const
 {
-    cout << '\n' << heading << '\n' << "Army: " << name << '\n';
-    cout << left << setw(CREATURE_WIDTH) << "Creature" << " | " << setw(TYPE_WIDTH) << "Type" << " | " << right << setw(NUMBER_WIDTH) << "Strength" << " | " << setw(NUMBER_WIDTH) << "Health" << '\n';
-    cout << string(CREATURE_TABLE_WIDTH, '-') << '\n';
+    cout << '\n' << heading << "\nArmy: " << name << '\n'
+         << left << setw(CREATURE_WIDTH) << "Creature" << " | " << setw(TYPE_WIDTH) << "Type" << " | " << right << setw(NUMBER_WIDTH) << "Strength" << " | " << setw(NUMBER_WIDTH) << "Health" << '\n'
+         << string(CREATURE_TABLE_WIDTH, '-') << '\n';
 
     if (ppCreatures != nullptr)
     {
@@ -136,25 +167,31 @@ void Army::setArmy(const string &armyName, int armySize, Creature **&ppNewCreatu
 
     if (isValid)
     {
-        try
-        {
-            string proposedName = armyName;
-            name = proposedName;
-            deallocateCreatures(ppCreatures, size);
-            ppCreatures = ppNewCreatures;
-            ppNewCreatures = nullptr;
-            size = armySize;
-        }
-        catch (const bad_alloc &)
-        {
-            deallocateCreatures(ppNewCreatures, armySize);
-            throw;
-        }
+        string proposedName = armyName;
+        name = proposedName;
+        deallocateCreatures(ppCreatures, size);
+        ppCreatures = ppNewCreatures;
+        ppNewCreatures = nullptr;
+        size = armySize;
     }
     else
     {
         deallocateCreatures(ppNewCreatures, armySize);
-        cout << INVALID_ARMY_MESSAGE << '\n';
+        cout << INVALID_ARMY_MESSAGE;
+    }
+}
+
+// Description: Dynamically generates a complete replacement list containing various derived Creature objects.
+// Precondition: The Army has a positive arbitrary size and nameFile is open with enough valid unique names.
+// Postcondition: A complete new Creature list replaces the old list or the old Army remains unchanged.
+void Army::generateCreatures(ifstream &nameFile)
+{
+    Creature **ppNewCreatures = nullptr;
+    bool isGeneratedNow = createCreatureArray(ppNewCreatures, size, &nameFile, nullptr);
+
+    if (isGeneratedNow)
+    {
+        setArmy(name, size, ppNewCreatures);
     }
 }
 
@@ -178,6 +215,8 @@ bool Army::createCreatureArray(Creature **&ppNewCreatures, int newSize, ifstream
 
     if (isCreated && isAllocationNeeded)
     {
+        // The Army allocates and cleans up its own memory here so that a failed
+        // allocation never leaves a partly built list behind for a caller to repair.
         try
         {
             ppNewCreatures = new Creature *[newSize]();
@@ -194,33 +233,12 @@ bool Army::createCreatureArray(Creature **&ppNewCreatures, int newSize, ifstream
                     creatureName = pSourceArmy->ppCreatures[creatureIndex]->getId();
                     creatureStrength = pSourceArmy->ppCreatures[creatureIndex]->getStrength();
                     creatureHealth = pSourceArmy->ppCreatures[creatureIndex]->getHealth();
-                    const string &sourceType = pSourceArmy->ppCreatures[creatureIndex]->getType();
-
-                    if (sourceType == DEMON_TYPE_NAME)
-                    {
-                        creatureType = DEMON;
-                    }
-                    else if (sourceType == BALROG_TYPE_NAME)
-                    {
-                        creatureType = BALROG;
-                    }
-                    else if (sourceType == ELF_TYPE_NAME)
-                    {
-                        creatureType = ELF;
-                    }
-                    else if (sourceType == CYBERELF_TYPE_NAME)
-                    {
-                        creatureType = CYBERELF;
-                    }
-                    else
-                    {
-                        isCreated = false;
-                    }
+                    creatureType = pSourceArmy->ppCreatures[creatureIndex]->getTypeCode();
                 }
-                else if (pNameFile != nullptr)
+                else
                 {
                     getline(*pNameFile, creatureName);
-                    isCreated = static_cast<bool>(*pNameFile) && isValidArmyName(creatureName);
+                    isCreated = static_cast<bool>(*pNameFile) && isValidName(creatureName);
 
                     if (isCreated)
                     {
@@ -228,10 +246,6 @@ bool Army::createCreatureArray(Creature **&ppNewCreatures, int newSize, ifstream
                         creatureHealth = randomNumber(MIN_ARMY_STAT, MAX_ARMY_STAT);
                         creatureType = static_cast<CreatureType>(randomNumber(DEMON, CREATURE_TYPE_COUNT - 1));
                     }
-                }
-                else
-                {
-                    isCreated = false;
                 }
 
                 if (isCreated)
@@ -262,8 +276,8 @@ bool Army::createCreatureArray(Creature **&ppNewCreatures, int newSize, ifstream
         }
         catch (const bad_alloc &)
         {
-            deallocateCreatures(ppNewCreatures, newSize);
-            throw;
+            isCreated = false;
+            cout << MEMORY_ERROR_MESSAGE;
         }
     }
 
@@ -296,12 +310,84 @@ void Army::deallocateCreatures(Creature **&ppCreatureList, int creatureCount)
     }
 }
 
+// Description: Alternates attacks between two matched Creatures until one reaches zero health.
+// Precondition: Both Creatures are alive and opponentArmyName names the opposing Army.
+// Postcondition: One Creature has zero health and the individual winner is announced.
+void Army::battleCreatures(Creature &thisCreature, Creature &opponentCreature, const string &opponentArmyName, int creaturePosition)
+{
+    int roundNumber = 1;
+    bool isThisArmyTurn = true;
+
+    cout << "\nPosition " << creaturePosition << " Battle\n";
+    printBattleHeader();
+
+    while (thisCreature.getHealth() > MIN_HEALTH && opponentCreature.getHealth() > MIN_HEALTH)
+    {
+        if (isThisArmyTurn)
+        {
+            attack(thisCreature, name, opponentCreature, opponentArmyName, roundNumber);
+        }
+        else
+        {
+            attack(opponentCreature, opponentArmyName, thisCreature, name, roundNumber);
+        }
+
+        isThisArmyTurn = !isThisArmyTurn;
+        ++roundNumber;
+    }
+
+    announceCreatureWinner(thisCreature, opponentCreature, opponentArmyName, roundNumber - 1);
+}
+
+// Description: Calculates one attack, lets the defender apply the damage to itself, and prints the attack details.
+// Precondition: The attacker and defender are alive and their Army names are valid.
+// Postcondition: Defender health is reduced without becoming negative and one attack row is displayed.
+void Army::attack(Creature &attacker, const string &attackerArmyName, Creature &defender, const string &defenderArmyName, int roundNumber)
+{
+    int damage = attacker.getDamage();
+    int healthBefore = defender.getHealth();
+
+    defender.takeDamage(damage);
+    cout << left << setw(ROUND_WIDTH) << roundNumber << " | " << setw(ARMY_WIDTH) << attackerArmyName << " | " << setw(FIGHTER_WIDTH) << attacker.getName() << " | " << right << setw(DAMAGE_WIDTH) << damage << " | " << left << setw(ARMY_WIDTH) << defenderArmyName << " | " << setw(FIGHTER_WIDTH) << defender.getName() << " | " << right << setw(HEALTH_WIDTH) << healthBefore << " | " << setw(HEALTH_WIDTH) << defender.getHealth() << '\n';
+}
+
+// Description: Prints the column headings and divider for detailed battle output.
+// Precondition: Standard output is available.
+// Postcondition: One complete battle table heading and divider are displayed.
+void Army::printBattleHeader() const
+{
+    cout << left << setw(ROUND_WIDTH) << "Round" << " | " << setw(ARMY_WIDTH) << "Atk Army" << " | " << setw(FIGHTER_WIDTH) << "Attacker" << " | " << right << setw(DAMAGE_WIDTH) << "Damage" << " | " << left << setw(ARMY_WIDTH) << "Def Army" << " | " << setw(FIGHTER_WIDTH) << "Defender" << " | " << right << setw(HEALTH_WIDTH) << "Health Before" << " | " << setw(HEALTH_WIDTH) << "Health After" << '\n'
+         << string(BATTLE_TABLE_WIDTH, '-') << '\n';
+}
+
+// Description: Announces the winning Creature, its Army, and the number of battle rounds.
+// Precondition: Exactly one of the matched Creatures has zero health.
+// Postcondition: The individual battle winner is displayed and neither Creature changes.
+void Army::announceCreatureWinner(const Creature &thisCreature, const Creature &opponentCreature, const string &opponentArmyName, int roundCount) const
+{
+    string roundWord = " rounds.\n";
+
+    if (roundCount == 1)
+    {
+        roundWord = " round.\n";
+    }
+
+    if (thisCreature.getHealth() > MIN_HEALTH)
+    {
+        cout << thisCreature.getName() << " of " << name << " won this position battle in " << roundCount << roundWord;
+    }
+    else
+    {
+        cout << opponentCreature.getName() << " of " << opponentArmyName << " won this position battle in " << roundCount << roundWord;
+    }
+}
+
 // Description: Determines whether a proposed Army name and size form a valid Army record.
 // Precondition: A proposed Army name and size are supplied.
 // Postcondition: True is returned only when the Army name is nonblank and size is nonnegative.
 bool Army::isValidArmy(const string &armyName, int armySize) const
 {
-    bool isValid = isValidArmyName(armyName) && armySize >= 0;
+    bool isValid = isValidName(armyName) && armySize >= 0;
 
     return isValid;
 }

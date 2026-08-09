@@ -31,7 +31,7 @@ Creature::Creature(const string &creatureName, int creatureStrength, int creatur
 // Postcondition: The Creature members contain invalid values and derived objects are destroyed safely through a virtual destructor.
 Creature::~Creature()
 {
-    name.clear();
+    name = INVALID_NAME;
     strength = INVALID_STAT;
     health = INVALID_STAT;
 }
@@ -52,8 +52,23 @@ void Creature::setCreature(const string &creatureName, int creatureStrength, int
     }
     else
     {
-        cout << INVALID_CREATURE_MESSAGE << '\n';
+        cout << INVALID_CREATURE_MESSAGE;
     }
+}
+
+// Description: Reduces this Creature's own health by one attack without ever allowing negative health.
+// Precondition: The Creature contains a valid record and damage is the attacker's calculated damage.
+// Postcondition: Health is lowered to no less than zero through setCreature and the record stays complete.
+void Creature::takeDamage(int damage)
+{
+    int proposedHealth = health - damage;
+
+    if (proposedHealth < MIN_HEALTH)
+    {
+        proposedHealth = MIN_HEALTH;
+    }
+
+    setCreature(name, strength, proposedHealth);
 }
 
 // Description: Resets Creature strength and health to random values from 30 through 150.
@@ -116,7 +131,7 @@ string Creature::to_String() const
 // Postcondition: True is returned only when the complete record is valid.
 bool Creature::isValidCreature(const string &creatureName, int creatureStrength, int creatureHealth) const
 {
-    bool isValid = !creatureName.empty() && creatureStrength >= MIN_RESET_STAT && creatureStrength <= MAX_ARMY_STAT && creatureHealth >= 0 && creatureHealth <= MAX_ARMY_STAT;
+    bool isValid = isValidName(creatureName) && creatureStrength >= MIN_VALID_STRENGTH && creatureStrength <= MAX_ARMY_STAT && creatureHealth >= MIN_HEALTH && creatureHealth <= MAX_ARMY_STAT;
 
     return isValid;
 }

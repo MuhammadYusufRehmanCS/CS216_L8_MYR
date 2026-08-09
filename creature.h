@@ -21,11 +21,13 @@ public:
     virtual ~Creature();
 
     void setCreature(const std::string &creatureName, int creatureStrength, int creatureHealth);
+    void takeDamage(int damage);
     void reset();
 
     const std::string &getId() const;
     virtual std::string getName() const = 0;
     virtual const std::string &getType() const = 0;
+    virtual CreatureType getTypeCode() const = 0;
     int getStrength() const;
     int getHealth() const;
     virtual int getDamage() const;

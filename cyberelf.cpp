@@ -37,6 +37,14 @@ const string &Cyberelf::getType() const
     return CYBERELF_TYPE_NAME;
 }
 
+// Description: Returns the Cyberelf type code used when an Army copies a Creature list.
+// Precondition: The Cyberelf object exists.
+// Postcondition: The Cyberelf enumerator is returned and the object remains unchanged.
+CreatureType Cyberelf::getTypeCode() const
+{
+    return CYBERELF;
+}
+
 // Description: Calculates Elf damage and adds bonus damage with the configured Cyberelf chance.
 // Precondition: The Cyberelf contains valid strength and the random number generator has been seeded.
 // Postcondition: Creature, Elf, and Cyberelf damage rules are combined and returned.
