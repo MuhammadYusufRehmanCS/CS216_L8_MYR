@@ -21,7 +21,7 @@ int main()
     Game game;
 
     srand(static_cast<unsigned int>(time(nullptr)));
-    cout << LAB_NAME << '\n' << STUDENT_NAME << '\n';
+    cout << LAB_NAME << STUDENT_NAME;
 
     // Each class cleans up and reports its own allocation failures locally, so this
     // is the program-level bad_alloc handler required for every remaining allocation.
@@ -137,49 +137,45 @@ Army #1 Stats before the Battle
 Army: rED
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Cyberelf       |          202 |          199
-Thalia             | Cyberelf       |          182 |          187
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |          220
 
 Army #2 Stats before the Battle
 Army: bLUE
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Elf            |           62 |          241
-Lyra               | Elf            |           64 |          203
+Kael               | Elf            |          162 |          184
+Lyra               | Demon          |          133 |          163
 
 Position 1 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | rED              | Morgas the Cyberelf          |        145 | bLUE             | Kael the Elf                 |            241 |             96
-2        | bLUE             | Kael the Elf                 |         13 | rED              | Morgas the Cyberelf          |            199 |            186
-3        | rED              | Morgas the Cyberelf          |         21 | bLUE             | Kael the Elf                 |             96 |             75
-4        | bLUE             | Kael the Elf                 |          1 | rED              | Morgas the Cyberelf          |            186 |            185
-5        | rED              | Morgas the Cyberelf          |        147 | bLUE             | Kael the Elf                 |             75 |              0
-Morgas the Cyberelf of rED won this position battle in 5 rounds.
+1        | rED              | Morgas the Cyberelf          |        186 | bLUE             | Kael the Elf                 |            184 |              0
+Morgas the Cyberelf of rED won this position battle in 1 round.
 
 Position 2 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | rED              | Thalia the Cyberelf          |         58 | bLUE             | Lyra the Elf                 |            203 |            145
-2        | bLUE             | Lyra the Elf                 |         90 | rED              | Thalia the Cyberelf          |            187 |             97
-3        | rED              | Thalia the Cyberelf          |        168 | bLUE             | Lyra the Elf                 |            145 |              0
+1        | rED              | Thalia the Cyberelf          |         96 | bLUE             | Lyra the Demon               |            163 |             67
+2        | bLUE             | Lyra the Demon               |         91 | rED              | Thalia the Cyberelf          |            220 |            129
+3        | rED              | Thalia the Cyberelf          |         94 | bLUE             | Lyra the Demon               |             67 |              0
 Thalia the Cyberelf of rED won this position battle in 3 rounds.
 
 Army #1 Stats after the Battle
 Army: rED
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Cyberelf       |          202 |          185
-Thalia             | Cyberelf       |          182 |           97
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |          129
 
 Army #2 Stats after the Battle
 Army: bLUE
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Elf            |           62 |            0
-Lyra               | Elf            |           64 |            0
+Kael               | Elf            |          162 |            0
+Lyra               | Demon          |          133 |            0
 
-rED overall health: 282
+rED overall health: 337
 bLUE overall health: 0
 rED is the winning army.
 
@@ -209,144 +205,141 @@ Army #1 Stats before the Battle
 Army: Gold
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Demon          |          228 |           91
-Thalia             | Demon          |          238 |          107
-Kael               | Cyberelf       |          245 |          154
-Lyra               | Cyberelf       |           49 |          175
-Darius             | Elf            |          224 |          139
-Selene             | Demon          |          231 |          214
-Orion              | Elf            |          113 |          260
-Freya              | Demon          |           51 |           52
-Ronan              | Elf            |          262 |          161
-Elara              | Elf            |          194 |          125
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |          220
+Kael               | Elf            |          162 |          184
+Lyra               | Demon          |          133 |          163
+Darius             | Elf            |          104 |          111
+Selene             | Elf            |           86 |          260
+Orion              | Balrog         |          261 |          254
+Freya              | Elf            |          108 |           56
+Ronan              | Demon          |          144 |          215
+Elara              | Balrog         |          143 |          208
 
 Army #2 Stats before the Battle
 Army: Silver
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Cassian            | Balrog         |          159 |          121
-Nerissa            | Balrog         |           63 |          275
-Draven             | Cyberelf       |          143 |          264
-Aria               | Elf            |          181 |          256
-Magnus             | Demon          |          200 |          104
-Vesper             | Balrog         |           49 |          172
-Lucian             | Balrog         |          110 |          182
-Isolde             | Demon          |          175 |          222
-Talon              | Cyberelf       |           56 |           98
-Eira               | Balrog         |          165 |          123
+Cassian            | Balrog         |          144 |          189
+Nerissa            | Elf            |          186 |          242
+Draven             | Cyberelf       |          238 |           72
+Aria               | Balrog         |          148 |          134
+Magnus             | Cyberelf       |           49 |          113
+Vesper             | Balrog         |          233 |          139
+Lucian             | Elf            |          117 |           58
+Isolde             | Demon          |           99 |           79
+Talon              | Cyberelf       |          139 |          251
+Eira               | Balrog         |          237 |          163
 
 Position 1 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Morgas the Demon             |        116 | Silver           | Cassian the Balrog           |            121 |              5
-2        | Silver           | Cassian the Balrog           |        120 | Gold             | Morgas the Demon             |             91 |              0
-Cassian the Balrog of Silver won this position battle in 2 rounds.
+1        | Gold             | Morgas the Cyberelf          |        193 | Silver           | Cassian the Balrog           |            189 |              0
+Morgas the Cyberelf of Gold won this position battle in 1 round.
 
 Position 2 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Thalia the Demon             |        100 | Silver           | Nerissa the Balrog           |            275 |            175
-2        | Silver           | Nerissa the Balrog           |         61 | Gold             | Thalia the Demon             |            107 |             46
-3        | Gold             | Thalia the Demon             |         51 | Silver           | Nerissa the Balrog           |            175 |            124
-4        | Silver           | Nerissa the Balrog           |         54 | Gold             | Thalia the Demon             |             46 |              0
-Nerissa the Balrog of Silver won this position battle in 4 rounds.
+1        | Gold             | Thalia the Cyberelf          |        212 | Silver           | Nerissa the Elf              |            242 |             30
+2        | Silver           | Nerissa the Elf              |        158 | Gold             | Thalia the Cyberelf          |            220 |             62
+3        | Gold             | Thalia the Cyberelf          |         71 | Silver           | Nerissa the Elf              |             30 |              0
+Thalia the Cyberelf of Gold won this position battle in 3 rounds.
 
 Position 3 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Kael the Cyberelf            |        100 | Silver           | Draven the Cyberelf          |            264 |            164
-2        | Silver           | Draven the Cyberelf          |        114 | Gold             | Kael the Cyberelf            |            154 |             40
-3        | Gold             | Kael the Cyberelf            |        209 | Silver           | Draven the Cyberelf          |            164 |              0
-Kael the Cyberelf of Gold won this position battle in 3 rounds.
+1        | Gold             | Kael the Elf                 |        125 | Silver           | Draven the Cyberelf          |             72 |              0
+Kael the Elf of Gold won this position battle in 1 round.
 
 Position 4 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Lyra the Cyberelf            |         11 | Silver           | Aria the Elf                 |            256 |            245
-2        | Silver           | Aria the Elf                 |         82 | Gold             | Lyra the Cyberelf            |            175 |             93
-3        | Gold             | Lyra the Cyberelf            |          4 | Silver           | Aria the Elf                 |            245 |            241
-4        | Silver           | Aria the Elf                 |         87 | Gold             | Lyra the Cyberelf            |             93 |              6
-5        | Gold             | Lyra the Cyberelf            |         12 | Silver           | Aria the Elf                 |            241 |            229
-6        | Silver           | Aria the Elf                 |        154 | Gold             | Lyra the Cyberelf            |              6 |              0
-Aria the Elf of Silver won this position battle in 6 rounds.
+1        | Gold             | Lyra the Demon               |         36 | Silver           | Aria the Balrog              |            134 |             98
+2        | Silver           | Aria the Balrog              |        244 | Gold             | Lyra the Demon               |            163 |              0
+Aria the Balrog of Silver won this position battle in 2 rounds.
 
 Position 5 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Darius the Elf               |         42 | Silver           | Magnus the Demon             |            104 |             62
-2        | Silver           | Magnus the Demon             |         97 | Gold             | Darius the Elf               |            139 |             42
-3        | Gold             | Darius the Elf               |        205 | Silver           | Magnus the Demon             |             62 |              0
+1        | Gold             | Darius the Elf               |         62 | Silver           | Magnus the Cyberelf          |            113 |             51
+2        | Silver           | Magnus the Cyberelf          |         70 | Gold             | Darius the Elf               |            111 |             41
+3        | Gold             | Darius the Elf               |         96 | Silver           | Magnus the Cyberelf          |             51 |              0
 Darius the Elf of Gold won this position battle in 3 rounds.
 
 Position 6 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Selene the Demon             |         81 | Silver           | Vesper the Balrog            |            172 |             91
-2        | Silver           | Vesper the Balrog            |         28 | Gold             | Selene the Demon             |            214 |            186
-3        | Gold             | Selene the Demon             |        190 | Silver           | Vesper the Balrog            |             91 |              0
-Selene the Demon of Gold won this position battle in 3 rounds.
+1        | Gold             | Selene the Elf               |         52 | Silver           | Vesper the Balrog            |            139 |             87
+2        | Silver           | Vesper the Balrog            |         86 | Gold             | Selene the Elf               |            260 |            174
+3        | Gold             | Selene the Elf               |         21 | Silver           | Vesper the Balrog            |             87 |             66
+4        | Silver           | Vesper the Balrog            |        107 | Gold             | Selene the Elf               |            174 |             67
+5        | Gold             | Selene the Elf               |         11 | Silver           | Vesper the Balrog            |             66 |             55
+6        | Silver           | Vesper the Balrog            |        270 | Gold             | Selene the Elf               |             67 |              0
+Vesper the Balrog of Silver won this position battle in 6 rounds.
 
 Position 7 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Orion the Elf                |         92 | Silver           | Lucian the Balrog            |            182 |             90
-2        | Silver           | Lucian the Balrog            |         61 | Gold             | Orion the Elf                |            260 |            199
-3        | Gold             | Orion the Elf                |        110 | Silver           | Lucian the Balrog            |             90 |              0
-Orion the Elf of Gold won this position battle in 3 rounds.
+1        | Gold             | Orion the Balrog             |        362 | Silver           | Lucian the Elf               |             58 |              0
+Orion the Balrog of Gold won this position battle in 1 round.
 
 Position 8 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Freya the Demon              |          5 | Silver           | Isolde the Demon             |            222 |            217
-2        | Silver           | Isolde the Demon             |        115 | Gold             | Freya the Demon              |             52 |              0
+1        | Gold             | Freya the Elf                |         52 | Silver           | Isolde the Demon             |             79 |             27
+2        | Silver           | Isolde the Demon             |         59 | Gold             | Freya the Elf                |             56 |              0
 Isolde the Demon of Silver won this position battle in 2 rounds.
 
 Position 9 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Ronan the Elf                |         73 | Silver           | Talon the Cyberelf           |             98 |             25
-2        | Silver           | Talon the Cyberelf           |         55 | Gold             | Ronan the Elf                |            161 |            106
-3        | Gold             | Ronan the Elf                |         62 | Silver           | Talon the Cyberelf           |             25 |              0
-Ronan the Elf of Gold won this position battle in 3 rounds.
+1        | Gold             | Ronan the Demon              |        130 | Silver           | Talon the Cyberelf           |            251 |            121
+2        | Silver           | Talon the Cyberelf           |         60 | Gold             | Ronan the Demon              |            215 |            155
+3        | Gold             | Ronan the Demon              |         97 | Silver           | Talon the Cyberelf           |            121 |             24
+4        | Silver           | Talon the Cyberelf           |        130 | Gold             | Ronan the Demon              |            155 |             25
+5        | Gold             | Ronan the Demon              |          7 | Silver           | Talon the Cyberelf           |             24 |             17
+6        | Silver           | Talon the Cyberelf           |        180 | Gold             | Ronan the Demon              |             25 |              0
+Talon the Cyberelf of Silver won this position battle in 6 rounds.
 
 Position 10 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Gold             | Elara the Elf                |        170 | Silver           | Eira the Balrog              |            123 |              0
-Elara the Elf of Gold won this position battle in 1 round.
+1        | Gold             | Elara the Balrog             |        140 | Silver           | Eira the Balrog              |            163 |             23
+2        | Silver           | Eira the Balrog              |        281 | Gold             | Elara the Balrog             |            208 |              0
+Eira the Balrog of Silver won this position battle in 2 rounds.
 
 Army #1 Stats after the Battle
 Army: Gold
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Demon          |          228 |            0
-Thalia             | Demon          |          238 |            0
-Kael               | Cyberelf       |          245 |           40
-Lyra               | Cyberelf       |           49 |            0
-Darius             | Elf            |          224 |           42
-Selene             | Demon          |          231 |          186
-Orion              | Elf            |          113 |          199
-Freya              | Demon          |           51 |            0
-Ronan              | Elf            |          262 |          106
-Elara              | Elf            |          194 |          125
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |           62
+Kael               | Elf            |          162 |          184
+Lyra               | Demon          |          133 |            0
+Darius             | Elf            |          104 |           41
+Selene             | Elf            |           86 |            0
+Orion              | Balrog         |          261 |          254
+Freya              | Elf            |          108 |            0
+Ronan              | Demon          |          144 |            0
+Elara              | Balrog         |          143 |            0
 
 Army #2 Stats after the Battle
 Army: Silver
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Cassian            | Balrog         |          159 |            5
-Nerissa            | Balrog         |           63 |          124
-Draven             | Cyberelf       |          143 |            0
-Aria               | Elf            |          181 |          229
-Magnus             | Demon          |          200 |            0
-Vesper             | Balrog         |           49 |            0
-Lucian             | Balrog         |          110 |            0
-Isolde             | Demon          |          175 |          217
-Talon              | Cyberelf       |           56 |            0
-Eira               | Balrog         |          165 |            0
+Cassian            | Balrog         |          144 |            0
+Nerissa            | Elf            |          186 |            0
+Draven             | Cyberelf       |          238 |            0
+Aria               | Balrog         |          148 |           98
+Magnus             | Cyberelf       |           49 |            0
+Vesper             | Balrog         |          233 |           55
+Lucian             | Elf            |          117 |            0
+Isolde             | Demon          |           99 |           27
+Talon              | Cyberelf       |          139 |           17
+Eira               | Balrog         |          237 |           23
 
-Gold overall health: 698
-Silver overall health: 575
+Gold overall health: 749
+Silver overall health: 220
 Gold is the winning army.
 
 
@@ -375,49 +368,46 @@ Army #1 Stats before the Battle
 Army: First
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Cyberelf       |           59 |          114
-Thalia             | Demon          |           75 |          169
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |          220
 
 Army #2 Stats before the Battle
 Army: Second
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Cyberelf       |           82 |          139
-Lyra               | Demon          |          217 |          137
+Kael               | Elf            |          162 |          184
+Lyra               | Demon          |          133 |          163
 
 Position 1 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | First            | Morgas the Cyberelf          |        106 | Second           | Kael the Cyberelf            |            139 |             33
-2        | Second           | Kael the Cyberelf            |         34 | First            | Morgas the Cyberelf          |            114 |             80
-3        | First            | Morgas the Cyberelf          |         43 | Second           | Kael the Cyberelf            |             33 |              0
-Morgas the Cyberelf of First won this position battle in 3 rounds.
+1        | First            | Morgas the Cyberelf          |        186 | Second           | Kael the Elf                 |            184 |              0
+Morgas the Cyberelf of First won this position battle in 1 round.
 
 Position 2 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | First            | Thalia the Demon             |         58 | Second           | Lyra the Demon               |            137 |             79
-2        | Second           | Lyra the Demon               |        122 | First            | Thalia the Demon             |            169 |             47
-3        | First            | Thalia the Demon             |         12 | Second           | Lyra the Demon               |             79 |             67
-4        | Second           | Lyra the Demon               |        167 | First            | Thalia the Demon             |             47 |              0
-Lyra the Demon of Second won this position battle in 4 rounds.
+1        | First            | Thalia the Cyberelf          |         96 | Second           | Lyra the Demon               |            163 |             67
+2        | Second           | Lyra the Demon               |         91 | First            | Thalia the Cyberelf          |            220 |            129
+3        | First            | Thalia the Cyberelf          |         94 | Second           | Lyra the Demon               |             67 |              0
+Thalia the Cyberelf of First won this position battle in 3 rounds.
 
 Army #1 Stats after the Battle
 Army: First
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Cyberelf       |           59 |           80
-Thalia             | Demon          |           75 |            0
+Morgas             | Cyberelf       |          210 |          208
+Thalia             | Cyberelf       |          120 |          129
 
 Army #2 Stats after the Battle
 Army: Second
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Cyberelf       |           82 |            0
-Lyra               | Demon          |          217 |           67
+Kael               | Elf            |          162 |            0
+Lyra               | Demon          |          133 |            0
 
-First overall health: 80
-Second overall health: 67
+First overall health: 337
+Second overall health: 0
 First is the winning army.
 
 
@@ -433,49 +423,49 @@ Army #1 Stats before the Battle
 Army: Third
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Elf            |          141 |          154
-Thalia             | Elf            |          268 |          209
+Morgas             | Demon          |          137 |          144
+Thalia             | Demon          |          214 |          143
 
 Army #2 Stats before the Battle
 Army: Fourth
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Elf            |          202 |          197
-Lyra               | Cyberelf       |           79 |          232
+Kael               | Cyberelf       |          208 |          144
+Lyra               | Demon          |          119 |          186
 
 Position 1 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Third            | Morgas the Elf               |         74 | Fourth           | Kael the Elf                 |            197 |            123
-2        | Fourth           | Kael the Elf                 |        109 | Third            | Morgas the Elf               |            154 |             45
-3        | Third            | Morgas the Elf               |        276 | Fourth           | Kael the Elf                 |            123 |              0
-Morgas the Elf of Third won this position battle in 3 rounds.
+1        | Third            | Morgas the Demon             |         67 | Fourth           | Kael the Cyberelf            |            144 |             77
+2        | Fourth           | Kael the Cyberelf            |         16 | Third            | Morgas the Demon             |            144 |            128
+3        | Third            | Morgas the Demon             |         44 | Fourth           | Kael the Cyberelf            |             77 |             33
+4        | Fourth           | Kael the Cyberelf            |        165 | Third            | Morgas the Demon             |            128 |              0
+Kael the Cyberelf of Fourth won this position battle in 4 rounds.
 
 Position 2 Battle
 Round    | Atk Army         | Attacker                     |     Damage | Def Army         | Defender                     |  Health Before |   Health After
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-1        | Third            | Thalia the Elf               |        169 | Fourth           | Lyra the Cyberelf            |            232 |             63
-2        | Fourth           | Lyra the Cyberelf            |         25 | Third            | Thalia the Elf               |            209 |            184
-3        | Third            | Thalia the Elf               |         37 | Fourth           | Lyra the Cyberelf            |             63 |             26
-4        | Fourth           | Lyra the Cyberelf            |        192 | Third            | Thalia the Elf               |            184 |              0
-Lyra the Cyberelf of Fourth won this position battle in 4 rounds.
+1        | Third            | Thalia the Demon             |        123 | Fourth           | Lyra the Demon               |            186 |             63
+2        | Fourth           | Lyra the Demon               |        102 | Third            | Thalia the Demon             |            143 |             41
+3        | Third            | Thalia the Demon             |        134 | Fourth           | Lyra the Demon               |             63 |              0
+Thalia the Demon of Third won this position battle in 3 rounds.
 
 Army #1 Stats after the Battle
 Army: Third
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Morgas             | Elf            |          141 |           45
-Thalia             | Elf            |          268 |            0
+Morgas             | Demon          |          137 |            0
+Thalia             | Demon          |          214 |           41
 
 Army #2 Stats after the Battle
 Army: Fourth
 Creature           | Type           |     Strength |       Health
 -----------------------------------------------------------------
-Kael               | Elf            |          202 |            0
-Lyra               | Cyberelf       |           79 |           26
+Kael               | Cyberelf       |          208 |           33
+Lyra               | Demon          |          119 |            0
 
-Third overall health: 45
-Fourth overall health: 26
+Third overall health: 41
+Fourth overall health: 33
 Third is the winning army.
 
 

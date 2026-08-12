@@ -24,7 +24,7 @@ Balrog::Balrog(const string &creatureName, int creatureStrength, int creatureHea
 // Postcondition: A descriptive Balrog name is returned and the object remains unchanged.
 string Balrog::getName() const
 {
-    return getId() + " the " + BALROG_TYPE_NAME;
+    return name + " the " + BALROG_TYPE_NAME;
 }
 
 // Description: Returns the Balrog class name.

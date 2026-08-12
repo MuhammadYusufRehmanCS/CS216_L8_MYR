@@ -60,6 +60,10 @@ extern const std::string PROGRAM_ERROR_MESSAGE;
 extern const std::string BATTLE_ERROR_MESSAGE;
 extern const std::string QUIT_MESSAGE;
 extern const std::string TIE_MESSAGE;
+extern const std::string WINNER_MESSAGE;
+extern const std::string POSITION_WINNER_MESSAGE;
+extern const std::string ROUND_WORD;
+extern const std::string ROUNDS_WORD;
 
 extern const int INVALID_STAT;
 extern const int DEFAULT_STAT;

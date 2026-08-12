@@ -365,21 +365,22 @@ void Army::printBattleHeader() const
 // Postcondition: The individual battle winner is displayed and neither Creature changes.
 void Army::announceCreatureWinner(const Creature &thisCreature, const Creature &opponentCreature, const string &opponentArmyName, int roundCount) const
 {
-    string roundWord = " rounds.\n";
+    const Creature *pWinner = &opponentCreature;
+    const string *pWinnerArmyName = &opponentArmyName;
+    string roundWord = ROUNDS_WORD;
 
     if (roundCount == 1)
     {
-        roundWord = " round.\n";
+        roundWord = ROUND_WORD;
     }
 
     if (thisCreature.getHealth() > MIN_HEALTH)
     {
-        cout << thisCreature.getName() << " of " << name << " won this position battle in " << roundCount << roundWord;
+        pWinner = &thisCreature;
+        pWinnerArmyName = &name;
     }
-    else
-    {
-        cout << opponentCreature.getName() << " of " << opponentArmyName << " won this position battle in " << roundCount << roundWord;
-    }
+
+    cout << pWinner->getName() << " of " << *pWinnerArmyName << POSITION_WINNER_MESSAGE << roundCount << roundWord;
 }
 
 // Description: Determines whether a proposed Army name and size form a valid Army record.

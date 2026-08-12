@@ -10,7 +10,8 @@
 
 class Creature
 {
-private:
+// Protected so every derived Creature reads these members directly and needs no getter call.
+protected:
     std::string name = DEFAULT_CREATURE_NAME;
     int strength = DEFAULT_STAT;
     int health = DEFAULT_STAT;

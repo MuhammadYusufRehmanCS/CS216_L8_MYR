@@ -26,7 +26,7 @@ Cyberelf::Cyberelf(const string &creatureName, int creatureStrength, int creatur
 // Postcondition: A descriptive Cyberelf name is returned and the object remains unchanged.
 string Cyberelf::getName() const
 {
-    return getId() + " the " + CYBERELF_TYPE_NAME;
+    return name + " the " + CYBERELF_TYPE_NAME;
 }
 
 // Description: Returns the Cyberelf class name.

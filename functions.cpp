@@ -10,8 +10,8 @@
 
 using namespace std;
 
-extern const string LAB_NAME = "CS 216 Lab #8 Abstract";
-extern const string STUDENT_NAME = "Muhammad Yusuf Rehman";
+extern const string LAB_NAME = "CS 216 Lab #8 Abstract\n";
+extern const string STUDENT_NAME = "Muhammad Yusuf Rehman\n";
 extern const string INPUT_FILE_NAME = "in_names.txt";
 
 extern const string DEFAULT_CREATURE_NAME = "DefaultCreature";
@@ -52,6 +52,10 @@ extern const string PROGRAM_ERROR_MESSAGE = "Dynamic memory allocation failed. T
 extern const string BATTLE_ERROR_MESSAGE = "Both armies must be generated and the same size to battle.\n";
 extern const string QUIT_MESSAGE = "Program ended.\n";
 extern const string TIE_MESSAGE = "The armies tied.\n";
+extern const string WINNER_MESSAGE = " is the winning army.\n";
+extern const string POSITION_WINNER_MESSAGE = " won this position battle in ";
+extern const string ROUND_WORD = " round.\n";
+extern const string ROUNDS_WORD = " rounds.\n";
 
 extern const int INVALID_STAT = -1;
 extern const int DEFAULT_STAT = 45;

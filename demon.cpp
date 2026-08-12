@@ -26,7 +26,7 @@ Demon::Demon(const string &creatureName, int creatureStrength, int creatureHealt
 // Postcondition: A descriptive Demon name is returned and the object remains unchanged.
 string Demon::getName() const
 {
-    return getId() + " the " + DEMON_TYPE_NAME;
+    return name + " the " + DEMON_TYPE_NAME;
 }
 
 // Description: Returns the Demon class name.

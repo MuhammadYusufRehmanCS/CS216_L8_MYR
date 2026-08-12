@@ -59,18 +59,20 @@ void Game::playGame()
 // Postcondition: Both total-health amounts and the winning Army or tie are displayed.
 void Game::announceArmyWinner(const Army &armyOne, const Army &armyTwo) const
 {
+    const string &armyOneName = armyOne.getName();
+    const string &armyTwoName = armyTwo.getName();
     int armyOneHealth = armyOne.getTotalHealth();
     int armyTwoHealth = armyTwo.getTotalHealth();
 
-    cout << '\n' << armyOne.getName() << " overall health: " << armyOneHealth << '\n' << armyTwo.getName() << " overall health: " << armyTwoHealth << '\n';
+    cout << '\n' << armyOneName << " overall health: " << armyOneHealth << '\n' << armyTwoName << " overall health: " << armyTwoHealth << '\n';
 
     if (armyOneHealth > armyTwoHealth)
     {
-        cout << armyOne.getName() << " is the winning army.\n";
+        cout << armyOneName << WINNER_MESSAGE;
     }
     else if (armyTwoHealth > armyOneHealth)
     {
-        cout << armyTwo.getName() << " is the winning army.\n";
+        cout << armyTwoName << WINNER_MESSAGE;
     }
     else
     {

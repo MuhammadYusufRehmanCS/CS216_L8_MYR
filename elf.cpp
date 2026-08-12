@@ -26,7 +26,7 @@ Elf::Elf(const string &creatureName, int creatureStrength, int creatureHealth) :
 // Postcondition: A descriptive Elf name is returned and the object remains unchanged.
 string Elf::getName() const
 {
-    return getId() + " the " + ELF_TYPE_NAME;
+    return name + " the " + ELF_TYPE_NAME;
 }
 
 // Description: Returns the Elf class name.
